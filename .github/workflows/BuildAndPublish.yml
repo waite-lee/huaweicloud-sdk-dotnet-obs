@@ -1,0 +1,28 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  buildAndPublish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Build
+      run: dotnet build esdk_obs_.net_standard.csproj
+    - name: Publish NuGet
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: esdk_obs_.net_standard.csproj
+        PACKAGE_NAME: HuaweiCloud.SDK.OBS.Core
+        VERSION_STATIC: 3.22.3
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
