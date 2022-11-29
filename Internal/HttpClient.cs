@@ -303,7 +303,7 @@ namespace OBS.Internal
                 string temp;
                 try
                 {
-                    if (response.Content.Length > 0)
+                    if (response.Content.CanRead || response.Content.Length > 0)
                     {
                         CommonParser.ParseErrorResponse(response.Content, exception);
                     }
